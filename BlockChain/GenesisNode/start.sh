@@ -1,7 +1,7 @@
 #! /bin/bash
 
 directory=$PWD'/GenesisNode/volume/'
-bootnodeKey=$(cat $PWD/Bootnode/boot.key)
+bootnodeKey=$(cat $PWD/Bootnode/connect.key)
 bootnodeURL='enode://'$bootnodeKey'@127.0.0.1:3300'
 
 rm -rf $directory'/*':
