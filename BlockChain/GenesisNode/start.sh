@@ -34,7 +34,9 @@ hackzurich/charity:1.0 \
 COMMENT
 
 # This is bypass
-cp -R $PWD/GenesisData/* $PWD/GenesisNode/volume/
+cp -R $PWD/GenesisData/* $PWD/GenesisNode/volume/;
+rm -rf /Users/$USER/.ethash
+
 geth \
   --identity=GenesisNode \
   --datadir=$directory \
