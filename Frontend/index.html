@@ -73,14 +73,14 @@
     <!-- app logic -->
     <script>
         const urlPart = '40ccdca6';
-        const apiUrl = `http://${urlPart}.ngrok.io:8080`;
+        // const apiUrl = `http://${urlPart}.ngrok.io:8080`;
+        const apiUrl = `http://localhost:8080`;
         let bcEntities = [];
 
         /*
          * Socket.io
          */
         // connect to socket.io WS
-        // TODO: replace with localhost before delivery
         const socket = io(apiUrl);
 
         // listen for events
@@ -126,7 +126,7 @@
             $.get(`${apiUrl}/api/data/tag?charity=${charity}`, data => {
                 $('.causes').html('');
                 data.forEach(item => {
-                    $('.causes').append(`<li>${item.text.substr(0, 15)...}</li>`);
+                    $('.causes').append(`<li>${item.text.substr(0, 15)}...}</li>`);
                 })
             });
         };
@@ -147,6 +147,7 @@
         * INIT
         */
         //d3js
+        // TODO
 
         // fetch data about Blockchain nodes
         $.get(`${apiUrl}/api/entity`, data => {
@@ -168,6 +169,7 @@
         });
     </script>
 
+    <!-- TODO: remove this before delivery -->
     <!-- livereload -->
     <script>
         // server: livereloadx
