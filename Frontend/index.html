@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-5 padding-top" style="height: 100%;">
                 <!-- MAP -->
-                <div class="globe centered">
+                <div id="globe" class="centered">
 
                 </div>
             </div>
@@ -26,12 +26,12 @@
                     <!-- FORM -->
                     <div class="form centered">
                         <h4>DONATE</h4>
-                        <form>
+                        <form onsubmit="sendMoney()">
                             <div><input type="text" value="100" class="amount">&nbsp;CHF</div>
                             <select class="charities" onchange="onCharitySelect()">
                                 <!-- INITIALLY EMPTY -->
                             </select>
-                            <button onclick="sendMoney()">DONATE</button>
+                            <button type="submit">DONATE</button>
                         </form>
                     </div>
                 </div>
@@ -70,6 +70,11 @@
 
     <!-- socket.io -->
     <script src="socket.io.slim.js"></script>
+    <!-- d3js -->
+    <script src="d3.v3.min.js"></script>
+    <script src="queue.v1.min.js"></script>
+    <script src="topojson.v0.min.js"></script>
+    <script src="globeHackZurich.js"></script>
     <!-- app logic -->
     <script>
         const urlPart = '40ccdca6';
@@ -106,12 +111,18 @@
         /*
          * DOM events
          */
-
+        drawRedLine(0);
         // initiate transaction
-        const sendMoney = () => {
+        const sendMoney = (evt) => {
+            evt.preventDefault();
+
             const charity = getCharity();
             const to = mapNameToAddress(charity);
             const amount = $('.amount').val();
+
+            // draw new line on d3js visualization
+            // we fake it here for the sake of visualization
+            // TODO
 
             $.post(apiUrl, { to, amount }, () => {
                 // no data returned
@@ -146,16 +157,10 @@
         /*
         * INIT
         */
-        //d3js
-        // TODO
 
         // fetch data about Blockchain nodes
         $.get(`${apiUrl}/api/entity`, data => {
             bcEntities = data;
-
-            // draw new line on d3js visualization
-            // we fake it here for the sake of visualization
-            // TODO (call function)
         });
 
         // fetch causes list

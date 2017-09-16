@@ -16,6 +16,7 @@ h4 {
 .container {
     height: 600px;
     margin-top: 100px;
+    background-color: lightsteelblue;
 }
 
 .padding-top {
@@ -35,3 +36,54 @@ h4 {
     margin: auto;
     text-align: center;
 }
+
+/*
+ * D3JS
+ */
+
+.land {
+    fill: #999;
+    stroke-opacity: 1;
+}
+
+.graticule {
+    fill: none;
+    stroke: black;
+    stroke-width:.5;
+    opacity:.2;
+}
+
+.labels {
+    font: 8px sans-serif;
+    fill: black;
+    opacity: .5;
+
+    display:none;
+}
+
+.noclicks { pointer-events:none; }
+
+.point {  opacity:.6; }
+
+.arcs {
+    opacity:.1;
+    stroke: gray;
+    stroke-width: 3;
+}
+.flyers {
+    stroke-width:2;
+    opacity: .6;
+    stroke: #DAA520;
+}
+.flyersRealTime {
+    stroke-width:5;
+    opacity: .6;
+    stroke: red;
+}
+.arc, .flyer {
+    stroke-linejoin: round;
+    fill:none;
+}
+.arc { }
+.flyer { }
+.flyer:hover { }
