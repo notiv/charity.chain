@@ -24,17 +24,11 @@ module.exports.getTags = (req, res) => {
       }, {
         $group: {
           _id: '$cause',
-          count: { $sum: 1 },
-          data: { $push: '$$ROOT' },
+          data: { $addToSet: '$$ROOT.charity' },
         }
-      }, {
-        $sort: { count: -1 }
-      }, {
-        $limit: req.query.limit || 3, 
       }
     );
   } else if (req.query.charity) {
-    // /api/data/tags?charity=UNICEF return all texts from unicef
     aggregationPipeling.push(
       {
         $match: { charity: req.query.charity }
@@ -45,7 +39,6 @@ module.exports.getTags = (req, res) => {
       }
     );
   } else {
-    // /api/data/tags return default 5 most mopuplar causes
     aggregationPipeling.push(
       {
         $group: {
@@ -55,7 +48,7 @@ module.exports.getTags = (req, res) => {
       }, {
         $sort: { count: -1 }
       }, {
-        $limit: req.query.limit || 5,
+        $limit: parseInt(req.query.limit) || 5,
       }
     );
   }

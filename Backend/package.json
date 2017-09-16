@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon index.js"
+    "start": "./node_modules/.bin/nodemon index.js",
+    "mockAI": "node ./Mock/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +14,7 @@
     "body-parser": "^1.18.1",
     "cors": "^2.8.4",
     "express": "^4.15.4",
+    "line-reader": "^0.4.0",
     "mongoose": "^4.11.11",
     "socket.io": "^2.0.3",
     "solc": "^0.4.16",
