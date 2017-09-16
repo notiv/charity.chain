@@ -123,10 +123,10 @@
         const onCharitySelect = () => {
             const charity = getCharity();
 
-            $.get(`${apiUrl}/api/news/${charity}`, data => {
+            $.get(`${apiUrl}/api/data/tag?charity=${charity}`, data => {
                 $('.causes').html('');
                 data.forEach(item => {
-                    $('.causes').append(`<li>${item}</li>`);
+                    $('.causes').append(`<li>${item.text.substr(0, 15)...}</li>`);
                 })
             });
         };
@@ -135,9 +135,9 @@
         const onCauseSelect = () => {
             const cause = getCause();
 
-            $.get(`${apiUrl}/api/tag/${cause}`, data => {
+            $.get(`${apiUrl}/api/data/tag?cause=${cause}`, response => {
                 $('.charities').html('');
-                data.forEach(item => {
+                response.data.forEach(item => {
                     $('.charities').append(`<li><option="${item}">${item}</option></li>`);
                 })
             });
@@ -158,12 +158,12 @@
         });
 
         // fetch causes list
-        $.get(`${apiUrl}/api/tags`, data => {
+        $.get(`${apiUrl}/api/data/tag`, data => {
             bcEntities = data;
 
             $('.causes').html('');
             data.forEach(item => {
-                $('.causes').appendChild(`<li>${item}</li>`);
+                $('.causes').appendChild(`<li>${item._id}</li>`);
             })
         });
     </script>
