@@ -4,7 +4,7 @@ contract Charity {
     
     uint256 private counter;
     mapping(uint256 => address) private counterToAddress;
-    mapping(address => uint256) private addressToRole; // 1 charity, 2 volunteer, 3 receiver
+    mapping(address => uint256) private addressToRole; // 1 charity, 2 charity, 3 receiver
     mapping(address => uint256) private addressBalance;
     
     function Charity() {

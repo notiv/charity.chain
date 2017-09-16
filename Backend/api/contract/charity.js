@@ -68,3 +68,36 @@ module.exports.initalize = (parentCallback) => {
     parentCallback(err);
   });
 };
+
+module.exports.addEntity = (entity, parentCallback) => {
+  const charityType = {
+    donor: 1,
+    charity: 2,
+    recipient: 3,
+  }
+  async.waterfall([
+    callback => eth.unlockAccount(config.ethereum.account, config.ethereum.password, callback),
+    (unlocked, callback) => eth.getBlock('latest', callback),
+    (lastBlock, callback) => {
+      CharityContract
+        .methods
+        .addEntity(entity.address, charityType[entity.role])
+        .estimateGas({ from: config.ethereum.account, gas: lastBlock.gasLimit },
+        (err, result) => {
+          if (result === lastBlock.gasLimit) { err = new Error('Unsuficient gas problem.'); }
+          if (err) { logger.error('Error while estimating about of gas for smart contract.', err); }
+          callback(err, result);
+        });
+    },
+    (estimatedGas, callback) => {
+      CharityContract
+        .methods
+        .addEntity(entity.address, charityType[entity.role])
+        .send({ from: config.ethereum.account, gasLimit: estimatedGas * 5, gasPrice: 1 },
+        (err, result) => {
+          if (err) { logger.error('Error while deploying transaction on BC', err); }
+          callback(err, result);
+        });
+    },
+  ], (err, result) => parentCallback(err, entity));
+};

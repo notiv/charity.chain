@@ -1,5 +1,6 @@
 const Entity = require('./model');
 const logger = require('../../utils/logger');
+const charity = require('../contract/charity');
 const eth = require('../../utils/ethereum');
 const async = require('async');
 
@@ -31,24 +32,31 @@ module.exports.getSingle = (req, res) => {
     });
 };
 
-
 module.exports.create = (req, res) => {
   async.waterfall([
     callback => eth.newAccount('hackzurich', callback),
-    (address) => {
+    (address, callback) => {
       req.body.address = address;
       Entity
         .create(req.body,
         (err, result) => {
           if (err) {
-            logger.error('Error while creating new entity inside BC', err);
+            logger.error('Error while creating new entity inside MongoDB', err);
             res.sendStatus(409);
           } else {
-            res.json(result.toJSON());
+            callback(err, result);
           }
         });
+    },
+    (entity, callback) => charity.addEntity(entity, callback),
+  ], (err, result) => {
+    if(err) {
+      logger.error('Error in the processs of creating new enity', err);
+      res.sendStatus(409);
+    } else {
+      res.json(result);
     }
-  ]);
+  });
 };
 
 module.exports.update = (req, res) => {
