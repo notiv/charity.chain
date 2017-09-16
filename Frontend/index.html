@@ -3,25 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>HackZurich2017</title>
+
+    <!-- Jquery -->
     <script src="jquery-3.2.1.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-    <div class="row">
-        TODO
+    <div class="container border-top border-bottom">
+        <div class="row">
+            <div class="col-md-5 padding-top" style="height: 100%;">
+                <!-- MAP -->
+                <div class="globe centered">
+
+                </div>
+            </div>
+            <div class="col-md-4" style="height: 100%;">
+                <div class="row padding-top" style="height: 50%;">
+                    <!-- FORM -->
+                    <div class="form centered">
+                        <!-- TODO -->FORM
+                    </div>
+                </div>
+                <div class="row padding-top border-top" style="height: 50%;">
+                    <!-- NEWS FOR CHARITY -->
+                    <div class="news centered">
+                        <!-- TODO -->NEWS
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" style="height: 100%;">
+                <div class="row padding-top" style="height: 70%;">
+                    <!-- CAUSES -->
+                    <div class="causes centered">
+                        <!-- TODO -->CAUSES
+                    </div>
+                </div>
+                <div class="row padding-top border-top" style="height: 30%;">
+                    <!-- TRANSACTION LIST -->
+                    <div class="transaction centered">
+                        <!-- TODO -->TRANSACTION LIST
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- socket.io -->
     <script src="socket.io.slim.js"></script>
     <!-- app logic -->
     <script>
+        var urlPart = '40ccdca6';
         // connect to socket.io WS
         // TODO: replace with localhost before delivery
-        // var socket = io('http://02dda712.ngrok.io:8080');
-        var socket = io('http://localhost:8080');
+        var socket = io('http://' + urlPart + '.ngrok.io:8080');
 
         // listen for events
         socket.on('test event', data => {
             console.log(data);
+        });
+
+        socket.on('pendingTransaction', data => {
+           console.log(data);
         });
     </script>
 
