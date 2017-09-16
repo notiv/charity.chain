@@ -138,7 +138,7 @@
             $.get(`${apiUrl}/api/tag/${cause}`, data => {
                 $('.charities').html('');
                 data.forEach(item => {
-                    $('.charities').appendChild(`<li>${item}</li>`);
+                    $('.charities').appendChild(`<li><option="${item}">${item}</option></li>`);
                 })
             });
         };
