@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/nodemon index.js",
-    "mockAI": "node ./Mock/indexAI.js"
+    "mockAI": "node ./Mock/indexAI.js",
+    "mockCH": "node ./Mock/indexCH.js"
   },
   "author": "",
   "license": "ISC",
