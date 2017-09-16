@@ -27,26 +27,32 @@
                     <div class="form centered">
                         <h4>DONATE</h4>
                         <form>
-                            <input type="text" value="100 $">
-                            <select class="charities">
+                            <div><input type="text" value="100" class="amount">&nbsp;CHF</div>
+                            <select class="charities" onchange="onCharitySelect()">
                                 <!-- INITIALLY EMPTY -->
                             </select>
-                            <button onClick="sendMoney()">DONATE</button>
+                            <button onclick="sendMoney()">DONATE</button>
                         </form>
                     </div>
                 </div>
                 <div class="row padding-top border-top" style="height: 50%;">
                     <!-- NEWS FOR CHARITY -->
-                    <div class="news centered">
-                        <!-- TODO -->NEWS
+                    <div class="centered">
+                        <h4>NEWS</h4>
+                        <ul class="news">
+                            <!-- INITIALLY EMPTY -->
+                        </ul>
                     </div>
                 </div>
             </div>
             <div class="col-md-3" style="height: 100%;">
                 <div class="row padding-top" style="height: 70%;">
                     <!-- CAUSES -->
-                    <div class="causes centered">
-                        <!-- TODO -->CAUSES
+                    <div class="centered">
+                        <h4>CAUSES</h4>
+                        <ul class="causes">
+                            <!-- initially empty -->
+                        </ul>
                     </div>
                 </div>
                 <div class="row padding-top border-top" style="height: 30%;">
@@ -63,19 +69,18 @@
     <script src="socket.io.slim.js"></script>
     <!-- app logic -->
     <script>
+        const urlPart = '40ccdca6';
+        const apiUrl = `http://${urlPart}.ngrok.io:8080`;
+        let bcEntities = [];
+
         /*
          * Socket.io
          */
-        const urlPart = '40ccdca6';
         // connect to socket.io WS
         // TODO: replace with localhost before delivery
-        const socket = io('http://' + urlPart + '.ngrok.io:8080');
+        const socket = io(apiUrl);
 
         // listen for events
-        socket.on('test event', data => {
-            console.log(data);
-        });
-
         socket.on('pendingTransaction', data => {
            console.log(data);
         });
@@ -83,22 +88,47 @@
         /*
          * UTILITY
          */
-        const mapNameToAddress = () => {
+        const mapNameToAddress = (charity) => {
             // TODO
         };
+
+        const getCharity = () => $('.charities').find('option:selected').text();
 
         /*
          * DOM events
          */
 
+        // initiate transaction
         const sendMoney = () => {
-            const charity = $('.charities').find('option:selected').text();
-            const charityAddress = mapNameToAddress();
+            const charity = getCharity();
+            const to = mapNameToAddress(charity);
+            const amount = $('.amount').val();
+
+            $.post(apiUrl, { to, amount }, () => {
+                // no data returned
+                console.log('success');
+            });
+        };
+
+        // display charity-related news
+        const onCharitySelect = () => {
+            const charity = getCharity();
+
+            $.get(`${apiUrl}/api/news/${charity}`, data => {
+                $('.causes').html('');
+                data.forEach(item => {
+                    $('.causes').appendChild(`<li>${item}</li>`);
+                })
+            });
         };
 
         /*
-        * init data
+        * INIT
         */
+        // fetch data about Blockchain nodes
+        $.get(`${apiUrl}/api/entity`, data => {
+            bcEntities = data;
+        });
     </script>
 
     <!-- livereload -->
