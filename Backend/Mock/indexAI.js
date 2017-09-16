@@ -3,12 +3,13 @@ const logger = require('../utils/logger');
 const Data = require('../api/data/model');
 const database = require('../utils/database');
 const lineReader = require('line-reader');
+const path = require('path');
 
 database.initalize((err) => {
   if(err) {
     logger.error('Error occurred while connecting with database.');
   } else {
-    lineReader.eachLine('AI.data', (line, last, callback) => {
+    lineReader.eachLine(path.join(__dirname, 'AI.data'), (line, last, callback) => {
       const lineJSON = JSON.parse(line);
       const data = {};
       if (lineJSON.dateCreated) data.timestamp = lineJSON.dateCreated.$date;
