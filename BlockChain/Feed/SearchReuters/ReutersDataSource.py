@@ -33,7 +33,7 @@ class ReutersDataSource:
             return self.base_call(method, root_url, args)
         else:
             root_url = SERVICE_URL
-            print("self.authToken: ", self.authToken)
+            # print("self.authToken: ", self.authToken)
             args['token'] = self.authToken
             return self.search_call(method, root_url, args)
 
