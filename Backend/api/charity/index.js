@@ -3,6 +3,6 @@ const router = express.Router();
 const CharityController = require('./controller');
 
 router.post('/donation', CharityController.donation);
-router.post('/transaction', CharityController.transaction);
+router.post('/transfer', CharityController.transfer);
 
 module.exports = router;

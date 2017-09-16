@@ -5,31 +5,45 @@ const eth = require('../../utils/ethereum');
 const async = require('async');
 
 module.exports.getAll = (req, res) => {
-  Entity
-    .find({})
-    .lean()
-    .exec((err, result) => {
-      if (err) {
-        logger.error('Error while returning entities.', { err, result });
-        res.sendStatus(409);
-      } else {
-        res.json(result);
-      }
-    });
+  async.waterfall([
+    (callback) => {
+      Entity
+      .find({})
+      .lean()
+      .exec(callback);
+    },
+    (entries, callback) => {
+      async.map(entries, (entry, callback) => {
+        charity.getBalance(entry, callback);
+      }, callback);
+    }
+  ], (err, result) => {
+    if (err) {
+      logger.error('Error while returning entities.', { err, result });
+      res.sendStatus(409);
+    } else {
+      res.json(result);
+    }
+  });
 };
 
 module.exports.getSingle = (req, res) => {
-  Entity
-    .findById(req.params.id)
-    .lean()
-    .exec((err, result) => {
-      if (err) {
-        logger.error('Error while returning single entity.', { err, result });
-        res.sendStatus(409);
-      } else {
-        res.json(result);
-      }
-    });
+  async.waterfall([
+    (callback) => {
+      Entity
+        .findById(req.params.id)
+        .lean()
+        .exec(callback);
+    },
+    (entry, callback) => harity.getBalance(entry, callback),
+  ], (err, result) => {
+    if (err) {
+      logger.error('Error while returning single entity.', { err, result });
+      res.sendStatus(409);
+    } else {
+      res.json(result);
+    }
+  });
 };
 
 module.exports.create = (req, res) => {
