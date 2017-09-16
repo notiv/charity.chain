@@ -73,20 +73,20 @@
     <!-- app logic -->
     <script>
         const urlPart = '40ccdca6';
-        const apiUrl = `http://${urlPart}.ngrok.io:8080`;
+        // const apiUrl = `http://${urlPart}.ngrok.io:8080`;
+        const apiUrl = `http://localhost:8080`;
         let bcEntities = [];
 
         /*
          * Socket.io
          */
         // connect to socket.io WS
-        // TODO: replace with localhost before delivery
         const socket = io(apiUrl);
 
         // listen for events
         socket.on('pendingTransaction', data => {
             // show transaction
-            $('.transactions').html('').appendChild(`<li>${data}</li>`);
+            $('.transactions').html('').append(`<li>${data}</li>`);
         });
 
         socket.on('transactionCompleted', () => {
@@ -123,10 +123,10 @@
         const onCharitySelect = () => {
             const charity = getCharity();
 
-            $.get(`${apiUrl}/api/news/${charity}`, data => {
+            $.get(`${apiUrl}/api/data/tag?charity=${charity}`, data => {
                 $('.causes').html('');
                 data.forEach(item => {
-                    $('.causes').appendChild(`<li>${item}</li>`);
+                    $('.causes').append(`<li>${item.text.substr(0, 15)}...}</li>`);
                 })
             });
         };
@@ -135,10 +135,10 @@
         const onCauseSelect = () => {
             const cause = getCause();
 
-            $.get(`${apiUrl}/api/tag/${cause}`, data => {
+            $.get(`${apiUrl}/api/data/tag?cause=${cause}`, response => {
                 $('.charities').html('');
-                data.forEach(item => {
-                    $('.charities').appendChild(`<li><option="${item}">${item}</option></li>`);
+                response.data.forEach(item => {
+                    $('.charities').append(`<li><option="${item}">${item}</option></li>`);
                 })
             });
         };
@@ -147,6 +147,7 @@
         * INIT
         */
         //d3js
+        // TODO
 
         // fetch data about Blockchain nodes
         $.get(`${apiUrl}/api/entity`, data => {
@@ -158,16 +159,17 @@
         });
 
         // fetch causes list
-        $.get(`${apiUrl}/api/tags`, data => {
+        $.get(`${apiUrl}/api/data/tag`, data => {
             bcEntities = data;
 
             $('.causes').html('');
             data.forEach(item => {
-                $('.causes').appendChild(`<li>${item}</li>`);
+                $('.causes').appendChild(`<li>${item._id}</li>`);
             })
         });
     </script>
 
+    <!-- TODO: remove this before delivery -->
     <!-- livereload -->
     <script>
         // server: livereloadx
