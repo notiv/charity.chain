@@ -40,7 +40,6 @@ def test_search():
         # soup = BeautifulSoup(item.get('body_xhtml'))
         # text = str(soup.findAll(text=True))
         # text = text.replace("'\n'", "")
-        pass
 
 if __name__ == '__main__':
     test_search()
