@@ -25,7 +25,14 @@
                 <div class="row padding-top" style="height: 50%;">
                     <!-- FORM -->
                     <div class="form centered">
-                        <!-- TODO -->FORM
+                        <h4>DONATE</h4>
+                        <form>
+                            <input type="text" value="100 $">
+                            <select class="charities">
+                                <!-- INITIALLY EMPTY -->
+                            </select>
+                            <button onClick="sendMoney()">DONATE</button>
+                        </form>
                     </div>
                 </div>
                 <div class="row padding-top border-top" style="height: 50%;">
@@ -56,10 +63,13 @@
     <script src="socket.io.slim.js"></script>
     <!-- app logic -->
     <script>
-        var urlPart = '40ccdca6';
+        /*
+         * Socket.io
+         */
+        const urlPart = '40ccdca6';
         // connect to socket.io WS
         // TODO: replace with localhost before delivery
-        var socket = io('http://' + urlPart + '.ngrok.io:8080');
+        const socket = io('http://' + urlPart + '.ngrok.io:8080');
 
         // listen for events
         socket.on('test event', data => {
@@ -69,6 +79,26 @@
         socket.on('pendingTransaction', data => {
            console.log(data);
         });
+
+        /*
+         * UTILITY
+         */
+        const mapNameToAddress = () => {
+            // TODO
+        };
+
+        /*
+         * DOM events
+         */
+
+        const sendMoney = () => {
+            const charity = $('.charities').find('option:selected').text();
+            const charityAddress = mapNameToAddress();
+        };
+
+        /*
+        * init data
+        */
     </script>
 
     <!-- livereload -->

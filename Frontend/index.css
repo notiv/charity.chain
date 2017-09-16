@@ -24,3 +24,11 @@
     margin: auto;
     text-align: center;
 }
+
+input, select, button {
+    display: block;
+    text-align: center;
+    width: 80%;
+    margin: auto;
+    margin-top: 10px;
+}
