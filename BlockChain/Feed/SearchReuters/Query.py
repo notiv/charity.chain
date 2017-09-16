@@ -51,7 +51,7 @@ class Query:
             text = html2text.html2text(item.get('body_xhtml'))
 
             d['guid'] = guid
-            d['text'] = text
+            d['text'] = text[:300]
             d['dateCreated'] = datetime.datetime.fromtimestamp(r.get('dateCreated') / 1e3)
             d['cause'] = cause
             d['charityOrg'] = charity_org
