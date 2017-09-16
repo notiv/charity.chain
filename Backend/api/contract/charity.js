@@ -73,7 +73,8 @@ module.exports.addEntity = (entity, parentCallback) => {
   const charityType = {
     donor: 1,
     charity: 2,
-    recipient: 3,
+    contractor: 3,
+    recipient: 4,
   }
   async.waterfall([
     callback => eth.unlockAccount(config.ethereum.account, config.ethereum.password, callback),

@@ -7,7 +7,7 @@ const EntetySchema = new mongoose.Schema({
     lat: { type: Number, required: true },
   },
   address: { type: String, required: true, unique: true, index: true },
-  role: { type: String, enum: ['donor', 'charity', 'recipient'] },
+  role: { type: String, enum: ['donor', 'charity', 'contractor', 'recipient'] },
 }, { collection: 'Entities' });
 
 module.exports = mongoose.model('Entety', EntetySchema);

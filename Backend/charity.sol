@@ -1,38 +1,42 @@
 pragma solidity ^0.4.0;
 
 contract Charity {
+
+    /*
+      1 doner
+      2 charity
+      3 contractor
+      4 recipient
+    */
     
-    uint256 private counter;
-    mapping(uint256 => address) private counterToAddress;
-    mapping(address => uint256) private addressToRole; // 1 charity, 2 charity, 3 receiver
+    mapping(address => uint256) private addressRole;
     mapping(address => uint256) private addressBalance;
     
     function Charity() {
-        counter = 0;
-    }
-    
-    function getCounter() constant returns (uint256 _counter) {
-        _counter = counter;
     }
     
     function addEntity(address _to, uint256 _role) {
-        counterToAddress[counter] = _to;
-        addressToRole[_to] = _role;
+        addressRole[_to] = _role;
         addressBalance[_to] = 0;
-        counter += 1;
-    } 
-    
-    function getEntityAddress(uint256 _counter) constant returns(address _address) {
-        _address = _address = counterToAddress[_counter];
-    }
-     
-    function getEntityRole(uint256 _counter) constant returns( uint256 _role) {
-        address _address = counterToAddress[_counter];
-        _role = addressToRole[_address];
     }
     
-    function getEntityBalance(uint256 _counter) constant returns(uint256 _balance) {
-        address _address = counterToAddress[_counter];
+    function donate(address _to, uint256 _amount) {
+        require(_amount > 0);
+        addressBalance[_to] += _amount;
+    }
+    
+    function transfer(address _from, address _to, uint256 _amount) {
+        require(_amount > 0);
+        require(addressBalance[_from] - _amount >= 0);
+        addressBalance[_from] -= _amount;
+        addressBalance[_to] += _amount;
+    }
+
+    function getEntity(address _address) constant returns( uint256 _role) {
+        _role = addressRole[_address];
+    }
+
+    function getBalance(address _address) constant returns(uint256 _balance) {
         _balance = addressBalance[_address];
     }
 
