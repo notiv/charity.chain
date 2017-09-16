@@ -17,10 +17,10 @@ module.exports.create = (req, res) => {
 
 module.exports.getTags = (req, res) => {
   const aggregationPipeling = [];
-  if (req.query.tag) {
+  if (req.query.cause) {
     aggregationPipeling.push(
       {
-        $match: { cause: req.query.tag }
+        $match: { cause: req.query.cause }
       }, {
         $group: {
           _id: '$cause',
@@ -30,10 +30,22 @@ module.exports.getTags = (req, res) => {
       }, {
         $sort: { count: -1 }
       }, {
-        $limit: req.query.limit || 3,
+        $limit: req.query.limit || 3, 
+      }
+    );
+  } else if (req.query.charity) {
+    // /api/data/tags?charity=UNICEF return all texts from unicef
+    aggregationPipeling.push(
+      {
+        $match: { charity: req.query.charity }
+      }, {
+        $project: {
+          text: 1,
+        }
       }
     );
   } else {
+    // /api/data/tags return default 5 most mopuplar causes
     aggregationPipeling.push(
       {
         $group: {
