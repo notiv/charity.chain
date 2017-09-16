@@ -7,7 +7,7 @@ module.exports = {
   port: process.env.CHARITY_PORT || 8080,
 
   mongoDB: {
-    uri: process.env.CHARITY_MONGODB_URI || 'mongodb://127.0.0.1:27017',
+    uri: process.env.CHARITY_MONGODB_URI || 'mongodb://127.0.0.1:27017/Charity',
   },
 
   ethereum: {

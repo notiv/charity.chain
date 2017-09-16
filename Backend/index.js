@@ -6,6 +6,7 @@ const apiRouter = require('./api/index');
 const database = require('./utils/database');
 const ethereum = require('./utils/ethereum');
 const async = require('async');
+const CharityContract = require('./api/contract/charity');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use('/api', apiRouter);
 async.series([
   callback => database.initalize(callback),
   callback => ethereum.initalize(callback),
+  callback => CharityContract.initalize(callback),
 ], (err) => {
   if (err) {
     logger.error('Unable to start server because initialisation errors', err);
