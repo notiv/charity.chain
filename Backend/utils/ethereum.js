@@ -89,6 +89,19 @@ module.exports.deployContract = (contractABI, bytecode, parentCallback) => {
   ]);
 }
 
+module.exports.pendingTransactionBroadcast = (parentCallback) => {
+  web3.eth.getBlock(
+    'pending',
+    function (err, result) {
+        if (err) {
+          logger.error('Error occurred while getting pending transactions', err);
+          parentCallback(err, null);
+        } else {
+          parentCallback(null, result);
+        }
+    });
+};
+
 module.exports.recallContract = (address, abi) => {
   return new web3.eth.Contract(abi, address);
 }
