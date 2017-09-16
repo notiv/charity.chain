@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HackZurich2017</title>
+</head>
+<body>
+
+    <!-- socket.io -->
+    <script src="socket.io.slim.js"></script>
+    <!-- app logic -->
+    <script>
+        // connect to socket.io WS
+        var socket = io('http://localhost:8080');
+
+        // listen for events
+        socket.on('test event', data => {
+            console.log(data);
+        });
+    </script>
+
+    <!-- livereload -->
+    <script>
+        // server: livereloadx
+        document.write('<script src="http://'
+        + (location.host || 'localhost').split(':')[0]
+        + ':35729/livereload.js?snipver=1"></' + 'script>')
+    </script>
+</body>
+</html>
