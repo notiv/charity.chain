@@ -8,9 +8,6 @@ import requests
 from lxml import etree
 import datetime, re, json
 
-MONGO_URI = 'localhost:5142'
-MONGO_DATABASE = 'local'
-
 AUTH_URL = "https://commerce.reuters.com/rmd/rest/xml/"
 SERVICE_URL = "http://rmb.reuters.com/rmd/rest/json/"
 USERNAME = 'HackZurichAPI'
@@ -31,11 +28,12 @@ class ReutersDataSource:
     def _call(self, method, args={}, auth=False):
         if auth:
             root_url = AUTH_URL
+            return self.base_call(method, root_url, args)
         else:
             root_url = SERVICE_URL
             print("self.authToken: ", self.authToken)
             args['token'] = self.authToken
-        return self.base_call(method, root_url, args)
+            return self.search_call(method, root_url, args)
 
     def base_call(self, method, root_url, args={}):
         url = root_url + method + '?' + urllib.parse.urlencode(args)
@@ -44,6 +42,14 @@ class ReutersDataSource:
         print(rawd)
         parsed = etree.fromstring(rawd)
         return etree.fromstring(rawd)
+
+    def search_call(self, method, root_url, args={}):
+        url = root_url + method + '?' + urllib.parse.urlencode(args)
+        resp = urllib.request.urlopen(url, timeout=10)
+        data = resp.read()
+        encoding = resp.info().get_content_charset('utf-8')
+        json_obj = json.loads(data.decode(encoding))
+        return json_obj
 
     def authenticate_url(self, url):
         authUrl = url + "?token=" + self.authToken
