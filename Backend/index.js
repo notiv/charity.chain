@@ -7,31 +7,33 @@ const apiRouter = require('./api/index');
 const database = require('./utils/database');
 const async = require('async');
 const io = require('socket.io')(http);
-
-// etherum stuff
-// const ethereum = require('./utils/ethereum');
-// const CharityContract = require('./api/contract/charity');
+const ethereum = require('./utils/ethereum');
+const CharityContract = require('./api/contract/charity');
 
 app.use(bodyparser());
 app.use('/api', apiRouter);
 
-// socket.io set up
 io.on('connection', socket => {
-    // nothing yet
+  logger.info('User connected to SocketIO.');
+  ethereum.pendingTransactionBroadcast((err, result) => {
+    if (err) {
+      logger.error('Error occurred while trying to broadcast pending transactions to user.');
+    } else {
+      if (!result) { result = []; }
+      logger.info('Returning pending transaction to user.', result);
+      socket.emit('pendingTransactions', JSON.stringify(result));
+    }
+  });
+});
 
-    // test
-    const data = {
-      someData: ['hello', 'socket'],
-    };
-    io.emit('test event', data)
+io.on('disconnect', socket => {
+  logger.info('User disconected from SocketIO.');
 });
 
 async.series([
   callback => database.initalize(callback),
-
-  // etherum stuff
-  // callback => ethereum.initalize(callback),
-  // callback => CharityContract.initalize(callback),
+  callback => ethereum.initalize(callback),
+  callback => CharityContract.initalize(callback),
 ], (err) => {
   if (err && err !== true) {
     logger.error('Unable to start server because initialisation errors', err);
