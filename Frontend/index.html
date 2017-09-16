@@ -86,7 +86,7 @@
         // listen for events
         socket.on('pendingTransaction', data => {
             // show transaction
-            $('.transactions').html('').appendChild(`<li>${data}</li>`);
+            $('.transactions').html('').append(`<li>${data}</li>`);
         });
 
         socket.on('transactionCompleted', () => {
@@ -126,7 +126,7 @@
             $.get(`${apiUrl}/api/news/${charity}`, data => {
                 $('.causes').html('');
                 data.forEach(item => {
-                    $('.causes').appendChild(`<li>${item}</li>`);
+                    $('.causes').append(`<li>${item}</li>`);
                 })
             });
         };
@@ -138,7 +138,7 @@
             $.get(`${apiUrl}/api/tag/${cause}`, data => {
                 $('.charities').html('');
                 data.forEach(item => {
-                    $('.charities').appendChild(`<li><option="${item}">${item}</option></li>`);
+                    $('.charities').append(`<li><option="${item}">${item}</option></li>`);
                 })
             });
         };
