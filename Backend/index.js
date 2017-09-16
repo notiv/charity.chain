@@ -7,10 +7,8 @@ const apiRouter = require('./api/index');
 const database = require('./utils/database');
 const async = require('async');
 const io = require('socket.io')(http);
-
-// etherum stuff
-// const ethereum = require('./utils/ethereum');
-// const CharityContract = require('./api/contract/charity');
+const ethereum = require('./utils/ethereum');
+const CharityContract = require('./api/contract/charity');
 
 app.use(bodyparser());
 app.use('/api', apiRouter);
@@ -34,9 +32,8 @@ app.get('/api/highlights', (req, res) => {
 
 async.series([
   callback => database.initalize(callback),
-  // init Blockchain and smart contract
-  // callback => ethereum.initalize(callback),
-  // callback => CharityContract.initalize(callback),
+  callback => ethereum.initalize(callback),
+  callback => CharityContract.initalize(callback),
 ], (err) => {
   if (err && err !== true) {
     logger.error('Unable to start server because initialisation errors', err);
