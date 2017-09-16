@@ -50,15 +50,18 @@
                     <!-- CAUSES -->
                     <div class="centered">
                         <h4>CAUSES</h4>
-                        <ul class="causes">
+                        <ul class="causes" onchange="onCauseSelect()">
                             <!-- initially empty -->
                         </ul>
                     </div>
                 </div>
                 <div class="row padding-top border-top" style="height: 30%;">
                     <!-- TRANSACTION LIST -->
-                    <div class="transaction centered">
-                        <!-- TODO -->TRANSACTION LIST
+                    <div class="centered">
+                        <h4>TRANSACTION LIST</h4>
+                        <ul class="transactions">
+                            <!-- initially empty -->
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -82,17 +85,23 @@
 
         // listen for events
         socket.on('pendingTransaction', data => {
-           console.log(data);
+            // show transaction
+            $('.transactions').html('').appendChild(`<li>${data}</li>`);
+        });
+
+        socket.on('transactionCompleted', () => {
+            // remove completed transaction
+            $('.transactions').html('');
         });
 
         /*
          * UTILITY
          */
-        const mapNameToAddress = (charity) => {
-            // TODO
-        };
+        const mapNameToAddress = (charity) => bcEntities.find(entity => entity.name === charity).address;
 
         const getCharity = () => $('.charities').find('option:selected').text();
+
+        const getCause = () => $('.causes').find('option:selected').text();
 
         /*
          * DOM events
@@ -110,7 +119,7 @@
             });
         };
 
-        // display charity-related news
+        // list charity-related news
         const onCharitySelect = () => {
             const charity = getCharity();
 
@@ -122,12 +131,40 @@
             });
         };
 
+        // list cause-related charities
+        const onCauseSelect = () => {
+            const cause = getCause();
+
+            $.get(`${apiUrl}/api/tag/${cause}`, data => {
+                $('.charities').html('');
+                data.forEach(item => {
+                    $('.charities').appendChild(`<li>${item}</li>`);
+                })
+            });
+        };
+
         /*
         * INIT
         */
+        //d3js
+
         // fetch data about Blockchain nodes
         $.get(`${apiUrl}/api/entity`, data => {
             bcEntities = data;
+
+            // draw new line on d3js visualization
+            // we fake it here for the sake of visualization
+            // TODO (call function)
+        });
+
+        // fetch causes list
+        $.get(`${apiUrl}/api/tags`, data => {
+            bcEntities = data;
+
+            $('.causes').html('');
+            data.forEach(item => {
+                $('.causes').appendChild(`<li>${item}</li>`);
+            })
         });
     </script>
 
