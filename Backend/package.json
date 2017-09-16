@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/nodemon index.js",
-    "mockAI": "node ./Mock/index.js"
+    "mockAI": "node ./Mock/indexAI.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "express": "^4.15.4",
     "line-reader": "^0.4.0",
     "mongoose": "^4.11.11",
+    "request": "^2.81.0",
     "socket.io": "^2.0.3",
     "solc": "^0.4.16",
     "web3": "^1.0.0-beta.20",
