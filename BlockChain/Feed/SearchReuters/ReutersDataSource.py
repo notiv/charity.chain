@@ -10,8 +10,10 @@ import datetime, re, json
 
 AUTH_URL = "https://commerce.reuters.com/rmd/rest/xml/"
 SERVICE_URL = "http://rmb.reuters.com/rmd/rest/json/"
-USERNAME = 'HackZurichAPI'
-PASSWORD = '8XtQb447'
+# USERNAME = 'HackZurichAPI'
+# PASSWORD = '8XtQb447'
+USERNAME = 'chris.blatchfordAPI'
+PASSWORD = 'Ce88t6cU'
 
 class ReutersDataSource:
 
@@ -39,7 +41,7 @@ class ReutersDataSource:
         url = root_url + method + '?' + urllib.parse.urlencode(args)
         resp = urllib.request.urlopen(url, timeout=10)
         rawd = resp.read()
-        print(rawd)
+        # print(rawd)
         parsed = etree.fromstring(rawd)
         return etree.fromstring(rawd)
 
