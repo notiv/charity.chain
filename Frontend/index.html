@@ -78,8 +78,8 @@
     <!-- app logic -->
     <script>
         const urlPart = '40ccdca6';
-        // const apiUrl = `http://${urlPart}.ngrok.io:8080`;
-        const apiUrl = `http://localhost:8080`;
+        const apiUrl = `http://${urlPart}.ngrok.io:8080`;
+        // const apiUrl = `http://localhost:8080`;
         let bcEntities = [];
 
         /*
@@ -111,7 +111,6 @@
         /*
          * DOM events
          */
-        drawRedLine(0);
         // initiate transaction
         const sendMoney = (evt) => {
             evt.preventDefault();
@@ -122,7 +121,7 @@
 
             // draw new line on d3js visualization
             // we fake it here for the sake of visualization
-            // TODO
+            drawRedLine(0);
 
             $.post(apiUrl, { to, amount }, () => {
                 // no data returned
@@ -174,13 +173,12 @@
         });
     </script>
 
-    <!-- TODO: remove this before delivery -->
     <!-- livereload -->
     <script>
         // server: livereloadx
-        document.write('<script src="http://'
+      /*  document.write('<script src="http://'
         + (location.host || 'localhost').split(':')[0]
-        + ':35729/livereload.js?snipver=1"></' + 'script>')
+        + ':35729/livereload.js?snipver=1"></' + 'script>')*/
     </script>
 </body>
 </html>
