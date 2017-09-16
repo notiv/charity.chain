@@ -5,9 +5,13 @@ const config = require('./utils/config');
 const logger = require('./utils/logger');
 const apiRouter = require('./api/index');
 const database = require('./utils/database');
-// const ethereum = require('./utils/ethereum');
 const async = require('async');
 const io = require('socket.io')(http);
+const app = express();
+
+// etherum stuff
+// const ethereum = require('./utils/ethereum');
+// const CharityContract = require('./api/contract/charity');
 
 app.use(bodyparser());
 app.use('/api', apiRouter);
@@ -31,7 +35,12 @@ app.get('/api/highlights', (req, res) => {
 
 async.series([
   callback => database.initalize(callback),
+<<<<<<< HEAD
   // callback => ethereum.initalize(callback),
+=======
+  callback => ethereum.initalize(callback),
+  callback => CharityContract.initalize(callback),
+>>>>>>> 983ee5da6e7943b456398b3294eafb17c6e0582e
 ], (err) => {
   if (err) {
     logger.error('Unable to start server because initialisation errors', err);
