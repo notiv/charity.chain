@@ -18,7 +18,7 @@ async.series([
   callback => ethereum.initalize(callback),
   callback => CharityContract.initalize(callback),
 ], (err) => {
-  if (err) {
+  if (err && err !== true) {
     logger.error('Unable to start server because initialisation errors', err);
   } else {
     app.listen(config.port, (err) => {

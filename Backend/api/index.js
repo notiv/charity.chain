@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const EntetyRouter = require('./enteties/index');
+const EntityRouter = require('./entities/index');
 
-router.use('/entety', EntetyRouter);
+router.use('/entity', EntityRouter);
 
 module.exports = router;
