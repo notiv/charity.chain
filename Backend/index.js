@@ -9,10 +9,13 @@ const async = require('async');
 const io = require('socket.io')(http);
 const ethereum = require('./utils/ethereum');
 const CharityContract = require('./api/contract/charity');
+const cors = require('cors');
 
+app.use(cors());
 app.use(bodyparser());
 app.use('/api', apiRouter);
 
+/*
 io.on('connection', socket => {
   logger.info('User connected to SocketIO.');
   ethereum.pendingTransactionBroadcast((err, result) => {
@@ -29,6 +32,7 @@ io.on('connection', socket => {
 io.on('disconnect', socket => {
   logger.info('User disconected from SocketIO.');
 });
+*/
 
 async.series([
   callback => database.initalize(callback),
