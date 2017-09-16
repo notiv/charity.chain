@@ -15,13 +15,6 @@ const data = [{
     lat: 24.253885,
   }
 }, {
-  name: "Red Cross",
-  role: "charity",
-  geoLocation: { 
-    lng: 52.795379,
-    lat: -0.387219,
-  }
-}, {
   name: "Amnesty Internationals",
   role: "charity",
   geoLocation: {
