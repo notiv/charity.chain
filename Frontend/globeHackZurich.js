@@ -32,8 +32,7 @@ var swoosh = d3.svg.line()
 
 var links = [],
     arcLines = [];
-//TODO -- change "body" to "#globe"
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#globe").append("svg")
             .attr("width", width)
             .attr("height", height)
             .on("mousedown", mousedown);
