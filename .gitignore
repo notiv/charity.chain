@@ -3,3 +3,4 @@ node_modules
 volume
 /.idea
 /data
+/BlockChain/Feed/SearchReuters/__pycache__
