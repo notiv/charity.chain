@@ -6,7 +6,6 @@ const logger = require('./utils/logger');
 const apiRouter = require('./api/index');
 const database = require('./utils/database');
 const async = require('async');
-const io = require('socket.io')(http);
 const ethereum = require('./utils/ethereum');
 const CharityContract = require('./api/contract/charity');
 const cors = require('cors');
@@ -14,25 +13,6 @@ const cors = require('cors');
 app.use(cors());
 app.use(bodyparser());
 app.use('/api', apiRouter);
-
-/*
-io.on('connection', socket => {
-  logger.info('User connected to SocketIO.');
-  ethereum.pendingTransactionBroadcast((err, result) => {
-    if (err) {
-      logger.error('Error occurred while trying to broadcast pending transactions to user.');
-    } else {
-      if (!result) { result = []; }
-      logger.info('Returning pending transaction to user.', result);
-      socket.emit('pendingTransactions', JSON.stringify(result));
-    }
-  });
-});
-
-io.on('disconnect', socket => {
-  logger.info('User disconected from SocketIO.');
-});
-*/
 
 async.series([
   callback => database.initalize(callback),
