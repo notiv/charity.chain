@@ -17,7 +17,7 @@
 <body>
   <div class="container border-top border-bottom">
     <div class="row">
-      <div class="col-md-5 padding-top" style="height: 100%;">
+      <div class="col-md-6 padding-top" style="height: 100%;">
         <!-- MAP -->
         <div id="globe" class="centered">
 
@@ -31,8 +31,9 @@
             <div>
               <div><input type="text" value="100" class="amount">&nbsp;CHF</div>
               <select class="charities" onchange="onCharitySelect()">
-                                <!-- INITIALLY EMPTY -->
-                            </select>
+                <!-- INITIALLY EMPTY -->
+                <option disabled selected value>choose</option>
+              </select>
               <button type="button" onclick="sendMoney()">DONATE</button>
           </div>
           </div>
@@ -47,14 +48,15 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3" style="height: 100%;">
+      <div class="col-md-2" style="height: 100%;">
         <div class="row padding-top" style="height: 70%;">
           <!-- CAUSES -->
           <div class="centered">
             <h4>CAUSES</h4>
             <select class="causes" onchange="onCauseSelect()">
-              <!-- initially empty -->
-            </ul>
+              <!-- INITIALLY EMPTY -->
+              <option disabled selected value>choose</option>
+            </select>
           </div>
         </div>
         <div class="row padding-top border-top" style="height: 30%;">
@@ -70,44 +72,21 @@
     </div>
   </div>
 
-  <!-- socket.io 
-  <script src="socket.io.slim.js"></script>
-  -->
-  <!-- d3js -->
+  <!-- d3js (globe) -->
   <script src="d3.v3.min.js"></script>
   <script src="queue.v1.min.js"></script>
   <script src="topojson.v0.min.js"></script>
   <script src="globeHackZurich.js"></script>
   <!-- app logic -->
   <script>
-    const urlPart = '40ccdca6';
     const apiUrl = `http://127.0.0.1:8080`;
     let bcEntities = [];
+    let pollingInterval;
 
-    /*
-     * Socket.io
-     
-    // connect to socket.io WS
-    const socket = io(apiUrl);
-
-    // listen for events
-    socket.on('pendingTransaction', data => {
-      // show transaction
-      $('.transactions').html('').append(`<li>${data}</li>`);
-    });
-
-    socket.on('transactionCompleted', () => {
-      // remove completed transaction
-      $('.transactions').html('');
-    });
-    */
     /*
      * UTILITY
      */
-    const mapNameToAddress = function (charity) {
-      console.log(bcEntities, charity);
-      return bcEntities.find(entity => entity.name === charity).address;
-    } 
+    const mapNameToAddress = (charity) => bcEntities.find(entity => entity.name === charity).address;
 
     const getCharity = () => $('.charities').find('option:selected').text();
 
@@ -183,9 +162,10 @@
   <!-- livereload -->
   <script>
     // server: livereloadx
-      /*  document.write('<script src="http://'
+      // TODO: remove before delivery
+       document.write('<script src="http://'
         + (location.host || 'localhost').split(':')[0]
-        + ':35729/livereload.js?snipver=1"></' + 'script>')*/
+        + ':35729/livereload.js?snipver=1"></' + 'script>')
   </script>
 </body>
 </html>
