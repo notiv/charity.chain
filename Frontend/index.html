@@ -28,13 +28,13 @@
           <!-- FORM -->
           <div class="form centered">
             <h4>DONATE</h4>
-            <form onsubmit="sendMoney()">
+            <div>
               <div><input type="text" value="100" class="amount">&nbsp;CHF</div>
               <select class="charities" onchange="onCharitySelect()">
                                 <!-- INITIALLY EMPTY -->
                             </select>
-              <button type="submit">DONATE</button>
-            </form>
+              <button type="button" onclick="sendMoney()">DONATE</button>
+          </div>
           </div>
         </div>
         <div class="row padding-top border-top" style="height: 50%;">
@@ -114,9 +114,7 @@
      * DOM events
      */
     // initiate transaction
-    const sendMoney = (evt) => {
-      evt.preventDefault();
-
+    const sendMoney = () => {
       const charity = getCharity();
       const to = mapNameToAddress(charity);
       const amount = $('.amount').val();
@@ -125,7 +123,7 @@
       // we fake it here for the sake of visualization
       drawRedLine(0);
 
-      $.post(apiUrl, { to, amount }, () => {
+      $.post(`${apiUrl}/api/charity/donation`, { to, amount }, () => {
         // no data returned
         console.log('success');
       });
