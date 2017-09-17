@@ -83,7 +83,11 @@
   <script>
     const apiUrl = `http://127.0.0.1:8080`;
     let bcEntities = [];
-    let pollingInterval;
+    let pollingInterval = setInterval(() => {
+        $.post(`${apiUrl}/api/transactions`, response => {
+            console.log(JSON.parse(response));
+        });
+    }, 1000);
 
     /*
      * UTILITY
