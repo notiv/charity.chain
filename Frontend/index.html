@@ -52,7 +52,7 @@
           <!-- CAUSES -->
           <div class="centered">
             <h4>CAUSES</h4>
-            <ul class="causes" onchange="onCauseSelect()">
+            <select class="causes" onchange="onCauseSelect()">
               <!-- initially empty -->
             </ul>
           </div>
@@ -149,8 +149,11 @@
 
       $.get(`${apiUrl}/api/data/tag?cause=${cause}`, response => {
         $('.charities').html('');
-        response.data.forEach(item => {
-          $('.charities').append(`<li><option="${item}">${item}</option></li>`);
+        console.log(response);
+        response.forEach(i => {
+          i.data.forEach(item => {
+            $('.charities').append(`<option value="${item}">${item}</option>`);
+          })
         })
       });
     };
@@ -170,7 +173,7 @@
 
       $('.causes').html('');
       data.forEach(item => {
-        $('.causes').append(`<li>${item._id}</li>`);
+        $('.causes').append(`<option value="${item._id}">${item._id}</option>`);
       })
     });
   </script>
