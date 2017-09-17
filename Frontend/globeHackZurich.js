@@ -2,7 +2,7 @@ d3.select(window)
     .on("mousemove", mousemove)
     .on("mouseup", mouseup);
 
-var width = 960,
+var width = 500,
     height = 500;
 
 var proj = d3.geo.orthographic()
@@ -72,7 +72,7 @@ function ready(error, world, places) {
         .attr("offset","100%").attr("stop-color", "#505962")
         .attr("stop-opacity","0.3")
 
-  var drop_shadow = svg.append("defs").append("radialGradient")
+/*  var drop_shadow = svg.append("defs").append("radialGradient")
         .attr("id", "drop_shadow")
         .attr("cx", "50%")
         .attr("cy", "50%");
@@ -81,7 +81,7 @@ function ready(error, world, places) {
         .attr("stop-opacity",".5")
       drop_shadow.append("stop")
         .attr("offset","100%").attr("stop-color", "#000")
-        .attr("stop-opacity","0")  
+        .attr("stop-opacity","0")  */
 
   svg.append("ellipse")
     .attr("cx", 440).attr("cy", 450)
