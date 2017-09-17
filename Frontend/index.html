@@ -84,16 +84,19 @@
     const apiUrl = `http://127.0.0.1:8080`;
     let bcEntities = [];
     let pollingInterval = setInterval(() => {
-        $.post(`${apiUrl}/api/transactions`, response => {
-            console.log(JSON.parse(response));
+        // monitor for transations 
+        $.get(`${apiUrl}/api/transactions`, response => {
+          if (response[0]) $('.transactions').html(`<li>${response[0]}</li>`);
+          else $('.transactions').html('');
         });
     }, 1000);
 
     /*
      * UTILITY
      */
-    const mapNameToAddress = (charity) => bcEntities.find(entity => entity.name === charity).address;
-
+    const mapNameToAddress = (charity) => {
+      return bcEntities.find(entity => entity.name === charity).address;
+    }
     const getCharity = () => $('.charities').find('option:selected').text();
 
     const getCause = () => $('.causes').find('option:selected').text();
@@ -136,7 +139,6 @@
 
       $.get(`${apiUrl}/api/data/tag?cause=${cause}`, response => {
         $('.charities').html('');
-        console.log(response);
         response.forEach(i => {
           i.data.forEach(item => {
             $('.charities').append(`<option value="${item}">${item}</option>`);
@@ -157,8 +159,7 @@
     // fetch causes list
     $.get(`${apiUrl}/api/data/tag`, data => {
       bcEntities = data;
-
-      $('.causes').html('');
+      
       data.forEach(item => {
         $('.causes').append(`<option value="${item._id}">${item._id}</option>`);
       })
