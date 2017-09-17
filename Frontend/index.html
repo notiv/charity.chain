@@ -104,7 +104,10 @@
     /*
      * UTILITY
      */
-    const mapNameToAddress = (charity) => bcEntities.find(entity => entity.name === charity).address;
+    const mapNameToAddress = function (charity) {
+      console.log(bcEntities, charity);
+      return bcEntities.find(entity => entity.name === charity).address;
+    } 
 
     const getCharity = () => $('.charities').find('option:selected').text();
 
@@ -134,9 +137,10 @@
       const charity = getCharity();
 
       $.get(`${apiUrl}/api/data/tag?charity=${charity}`, data => {
-        $('.causes').html('');
+        $('.news').html('');
+        data = data.slice(0, 5)
         data.forEach(item => {
-          $('.causes').append(`<li>${item.text.substr(0, 15)}...}</li>`);
+          $('.news').append(`<li>${item.text.substr(0, 35)}...}</li>`);
         })
       });
     };
