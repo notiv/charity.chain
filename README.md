@@ -1,4 +1,4 @@
-# RUN private Blockchain
+# Run private Blockchain
 
 ## Install etherum 
 
@@ -8,13 +8,13 @@ https://ethereum.gitbooks.io/frontier-guide/content/installing_linux.html
 
 ./Blockchain/start.sh
 
-# RUN frontend (Linux)
+# Run frontend (Linux)
 
 npm install -g serve
 
 serve Frontend/
 
-# RUN DB in Docker
+# Run DB in Docker
  
 docker run \
   --detach \
