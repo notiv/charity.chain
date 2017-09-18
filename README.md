@@ -1,20 +1,22 @@
-# Run private Blockchain
+# charity.chain - A project for the Hackzurich 2017
 
-## Install etherum 
+## Run private Blockchain
+
+### Install etherum 
 
 https://ethereum.gitbooks.io/frontier-guide/content/installing_linux.html
 
-## Run etherum
+### Run etherum
 
 ./Blockchain/start.sh
 
-# Run frontend (Linux)
+## Run frontend (Linux)
 
 npm install -g serve
 
 serve Frontend/
 
-# Run DB in Docker
+## Run DB in Docker
  
 docker run \
   --detach \
